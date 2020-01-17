@@ -38,7 +38,9 @@ namespace csv.Tests
 
             var QSCount = (from city in countryCapitalQuery
                            select city).Count();
+            CountryModel cm = new CountryModel();
 
+            cm.AddCountries<CityModelImport>(countryCapitalQuery);
             //Debug.Write(QSCount);
 
             Assert.AreEqual(15493, myList.Count());
@@ -58,7 +60,11 @@ namespace csv.Tests
                                 orderby countryGroup.Key.Country
                                 select countryGroup;
 
-            using (var db = new CitiesContext())
+            //using (var db = new CitiesContext())
+            // DBConn conn = new DBConn();
+            // var db=conn.conn();
+            var db = DBConn.conn();
+            using (db)
             {
                 foreach (var country in countryGroups)
             {
